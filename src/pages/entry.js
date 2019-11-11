@@ -9,6 +9,8 @@ import store from '../store';
 import Service from 'service';
 import utils from '../utils/utils';
 import filter from '../filter';
+
+import '../common/flexible'
 import '../assets/fonts/iconfont.css';
 import {
   Button,

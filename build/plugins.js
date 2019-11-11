@@ -17,7 +17,7 @@ import {
   isBundleAnalyze
 } from "./env";
 
-import configPageEntry from "./entry.conf"
+import configPageEntry from "../dev.entry.config"
 
 function getEntry () {
   let entry = {};

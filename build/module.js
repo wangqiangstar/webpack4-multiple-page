@@ -4,6 +4,7 @@ import {
   isProduction,
   shouldUseSourceMap
 } from "./env";
+import path from 'path';
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import PostCssPresetEnv from "postcss-preset-env";
 import PostcssFlexBugsfixes from "postcss-flexbugs-fixes";
@@ -35,9 +36,31 @@ export default {
       test: /\.vue$/,
       use: [{
         loader: 'vue-loader'
-      }
-    ],
+        }
+      ],
       include: appPath
+    },
+    {
+      test: /\.vue$/,
+      use: [{
+          loader: path.join(process.cwd(), "./build/loaders/jsPx2RemLoader.js"),
+          options: {
+            remUnit: 75
+          }
+        }
+      ],
+      include: path.join(process.cwd(),`./src/pages/mobile/`)
+    },
+    {
+      test: /\.vue$/,
+      use: [{
+          loader: path.join(process.cwd(), "./build/loaders/jsPx2RemLoader.js"),
+          options: {
+            remUnit: 192
+          }
+        }
+      ],
+      include: path.join(process.cwd(),`./src/pages/pc/`)
     },
     {
       enforce: "pre",
@@ -83,7 +106,17 @@ export default {
         },
         "css-loader",
         postCssLoaderConfig,
-        "less-loader",
+        {
+          loader: "less-loader",
+          options: {
+           modifyVars: {
+             'primary-color': '#1DA57A',
+             'link-color': '#1DA57A',
+             'border-radius-base': '2px',
+           },
+           javascriptEnabled: true,
+         },
+        },
       ].filter(Boolean)
     }, {
       test: /\.(png\jpe?g|gif)$/,
